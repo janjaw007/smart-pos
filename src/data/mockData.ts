@@ -30,3 +30,11 @@ export const mockMenu: MenuItem[] = [
     category: "เครื่องดื่ม",
   },
 ];
+
+export const fetchMenuItems = (): Promise<MenuItem[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(mockMenu);
+    }, 3000);
+  });
+};
