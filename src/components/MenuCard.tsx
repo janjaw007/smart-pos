@@ -11,7 +11,7 @@ function MenuCard({ menu }: MenuCardProps) {
   return (
     <div className="border border-gray-200  p-4 rounded-2xl text-center shadow-md hover:shadow-lg transition-shadow bg-white">
       <img
-        src={`${import.meta.env.BASE_URL}${menu.image.replace("/", "")}`}
+        src={"." + menu.image}
         alt={menu.name}
         className="w-full h-48 object-cover rounded-xl"
       />

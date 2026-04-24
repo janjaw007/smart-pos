@@ -21,11 +21,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     0,
   );
 
-  useEffect(() => {
-    console.log("อัปเดตตะกร้าล่าสุด:", cart);
-    console.log("ราคารวมตอนนี้: ฿" + totalPrice);
-  }, [cart, totalPrice]);
-
   const addToCart = (menu: MenuItem) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === menu.id);
