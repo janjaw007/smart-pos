@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useState, useContext } from "react";
 import type { ReactNode } from "react";
 import type { CartItem, MenuItem } from "../types";
 interface CartContextType {
