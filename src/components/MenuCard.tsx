@@ -1,10 +1,17 @@
 import type { MenuItem } from "../types";
+import { useContext } from 'react';
+import { CartContext } from '../context/CartContext';
 
 interface MenuCardProps {
   menu: MenuItem;
 }
 
 function MenuCard({ menu }: MenuCardProps) {
+  const context = useContext(CartContext);
+
+  if(!context) return null;
+  const { addToCart } = context;
+
   return (
     <div className="border border-gray-200  p-4 rounded-2xl text-center shadow-md hover:shadow-lg transition-shadow bg-white">
       <img
@@ -17,7 +24,9 @@ function MenuCard({ menu }: MenuCardProps) {
         ${menu.price.toFixed(2)}
       </p>
 
-      <button className="bg-orange-500 hover:bg-amber-600 text-white w-full py-2 rounded-xl font-semibold transition-colors cursor-pointer">
+      <button
+      onClick={()=>addToCart(menu)}
+      className="bg-orange-500 hover:bg-amber-600 text-white w-full py-2 rounded-xl font-semibold transition-colors cursor-pointer">
         เพิ่มลงตะกร้า
       </button>
     </div>
