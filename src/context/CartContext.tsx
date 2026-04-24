@@ -1,20 +1,25 @@
-
-import {createContext,useState,ReactNode,useEffect} from 'react'
-import type {CartItem, MenuItem} from '../types';
+import { createContext, useState, useEffect } from "react";
+import type { ReactNode } from "react";
+import type { CartItem, MenuItem } from "../types";
 interface CartContextType {
-  cart:CartItem[];
-  addToCart:(menu: MenuItem) => void;
-  removeFromCart: (id: string)=>void;
-  clearCart:()=>void;
+  cart: CartItem[];
+  addToCart: (menu: MenuItem) => void;
+  removeFromCart: (id: string) => void;
+  clearCart: () => void;
   totalPrice: number;
 }
 
-export const CartContext = createContext<CartContextType | undefined>(undefined);
+export const CartContext = createContext<CartContextType | undefined>(
+  undefined,
+);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalPrice = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
 
   useEffect(() => {
     console.log("อัปเดตตะกร้าล่าสุด:", cart);
@@ -27,7 +32,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       if (existingItem) {
         return prevCart.map((item) =>
-          item.id === menu.id ? { ...item, quantity: item.quantity + 1 } : item
+          item.id === menu.id ? { ...item, quantity: item.quantity + 1 } : item,
         );
       }
 
@@ -42,7 +47,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const clearCart = () => setCart([]);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, totalPrice }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, clearCart, totalPrice }}
+    >
       {children}
     </CartContext.Provider>
   );

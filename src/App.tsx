@@ -3,7 +3,7 @@ import type { MenuItem } from "./types";
 import { fetchMenuItems, mockMenu } from "./data/mockData";
 import { useEffect, useState } from "react";
 import CategoryTabs from "./components/CategoryTabs";
-
+import Cart from "./components/Cart";
 function App() {
   const [menus, setMenus] = useState<MenuItem[]>([]);
   const [isLoading, setIsloading] = useState<boolean>(false);
@@ -43,45 +43,56 @@ function App() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
-          Tin's Thing Smart POS
-        </h1>
-        <div className="bg-white p-6 rounded-2xl shadow-sm mb-8 border border-gray-100">
-          <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-600 mb-2">
-              คุณกำลังหิวอะไรอยู่ ?
-            </label>
-            <input
-              className="w-full px-5 py-3 border border-gray-200 rounded-xl focus:ring-2  focus:ring-orange-500"
-              type="text"
-              placeholder="พิมพ์ชื่อเมนูอาหารที่ต้องการ..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+    <div className="min-h-screen bg-gray-50 p-4 sm:p-8">
+      {/* ใช้ flex จัด Layout ให้ฝั่งซ้ายเป็นเมนู ฝั่งขวาเป็นตะกร้า */}
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+        {/* --- ฝั่งซ้าย: พื้นที่แสดงเมนู (กว้างกว่า) --- */}
+        <div className="flex-1">
+          <h1 className="text-4xl font-bold mb-8 text-gray-800 text-center lg:text-left">
+            Tin's Thing Smart POS
+          </h1>
+
+          <div className="bg-white p-6 rounded-2xl shadow-sm mb-8 border border-gray-100">
+            <div className="mb-6">
+              <label className="block text-sm font-semibold text-gray-600 mb-2">
+                คุณกำลังหิวอะไรอยู่ ?
+              </label>
+              <input
+                className="w-full px-5 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 outline-none"
+                type="text"
+                placeholder="พิมพ์ชื่อเมนูอาหารที่ต้องการ..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            <CategoryTabs
+              categories={categories}
+              selectedCategory={selectedCategory}
+              onSelectCategory={setSelectedCategory}
             />
           </div>
-          <CategoryTabs
-            categories={categories}
-            selectedCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
-          />
+
+          {isLoading ? (
+            <p className="text-center text-xl text-gray-500 font-semibold py-20 animate-pulse">
+              กำลังจัดเตรียมเมนูอาหาร... 👨‍🍳
+            </p>
+          ) : filteredMenus.length === 0 ? (
+            <div className="text-center text-gray-500 py-10">
+              <p className="text-xl font-semibold mb-2">ไม่พบเมนูที่คุณค้นหา</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredMenus.map((menu) => {
+                return <MenuCard key={menu.id} menu={menu} />;
+              })}
+            </div>
+          )}
         </div>
-        {isLoading ? (
-          <p className="text-center text-xl text-gray-500 font-semibold py-20 animate-pulse">
-            กำลังจัดเตรียมเมนูอาหาร... 👨‍🍳
-          </p>
-        ) : filteredMenus.length === 0 ? (
-          <div className="text-center text-gray-500 py-10">
-            <p className="text-xl font-semibold mb-2">ไม่พบเมนูที่คุณค้นหา</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredMenus.map((menu) => {
-              return <MenuCard key={menu.id} menu={menu} />;
-            })}
-          </div>
-        )}
+
+        {/* --- ฝั่งขวา: ตะกร้าสินค้า (ความกว้างคงที่ที่ 400px ในจอใหญ่) --- */}
+        <div className="w-full lg:w-[400px]">
+          <Cart />
+        </div>
       </div>
     </div>
   );
