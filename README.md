@@ -1,73 +1,43 @@
-# React + TypeScript + Vite
+# 🍽️ Tin's Thing Smart POS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+แอปพลิเคชันระบบจัดการจุดขาย (Point of Sale) สำหรับร้านอาหารและคาเฟ่ พัฒนาขึ้นด้วย React และ TypeScript โดยเน้นการออกแบบ UI ที่ใช้งานง่ายและประสบการณ์ผู้ใช้ (UX) ที่ลื่นไหล โครงงานนี้เป็นส่วนหนึ่งของการเรียนรู้การพัฒนา Web Application แบบครบวงจร
 
-Currently, two official plugins are available:
+🔗 **[คลิกเพื่อดูเว็บไซต์ (Live Demo)]**([ใส่ลิงก์เว็บไซต์ของคุณถ้ามี])
+🎬 **[คลิกเพื่อดูวิดีโอสาธิตการใช้งาน]**([ใส่ลิงก์วิดีโอของคุณ])
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ ฟังก์ชันหลัก (Features)
+แอปพลิเคชันนี้ถูกพัฒนาขึ้นให้ครอบคลุมตามโจทย์ความต้องการ ดังนี้:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **ค้นหาและคัดกรองข้อมูล (Search & Filter):** ระบบค้นหาเมนูอาหารแบบ Real-time และแท็บหมวดหมู่ที่แยกประเภทอาหารอัตโนมัติ 
+- **ระบบตะกร้าสินค้า (Shopping Cart):** สามารถเพิ่ม ลบ และคำนวณราคาสินค้ารวมได้อัตโนมัติ โดยใช้ **React Context** ในการจัดการ State ส่วนกลาง (ลดปัญหา Props Drilling)
+- **การโหลดข้อมูลแบบ Asynchronous:** มีการจำลองการ Fetch API เพื่อดึงข้อมูลเมนูอาหาร พร้อมแสดงสถานะ Loading (`Promise` & `setTimeout`)
+- **การรับข้อมูลจากผู้ใช้ (React Forms):** ฟอร์มรับข้อมูลเบอร์โต๊ะและชื่อลูกค้าก่อนยืนยันการสั่งซื้อ พร้อมระบบ Validation พื้นฐาน
+- **ชิ้นส่วน UI ที่นำกลับมาใช้ซ้ำได้ (Reusable Components):** ออกแบบระบบ Component อย่างเป็นระเบียบ เช่น `MenuCard`, `CategoryTabs` และ `Cart`
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ เทคโนโลยีที่ใช้ (Tech Stack)
+- **Frontend Framework:** React (สร้างด้วย Vite เพื่อความรวดเร็ว)
+- **Language:** TypeScript (ใช้ Interface เพื่อกำหนดชนิดข้อมูล ลดข้อผิดพลาดในการเขียนโค้ด)
+- **Styling:** Tailwind CSS (สร้าง UI ที่สวยงามและ Responsive)
+- **State Management:** React Hooks (`useState`, `useEffect`, Custom Hook `useCart` ร่วมกับ Context API)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📂 โครงสร้างโฟลเดอร์ (Project Structure)
+```text
+src/
+ ├── components/       # ที่เก็บ Reusable Components
+ │   ├── Cart.tsx           # ระบบตะกร้าสินค้าและฟอร์มสั่งอาหาร
+ │   ├── CategoryTabs.tsx   # แท็บเลือกหมวดหมู่เมนู
+ │   └── MenuCard.tsx       # การ์ดแสดงเมนูอาหาร 1 จาน
+ ├── context/          # ที่เก็บข้อมูล State ส่วนกลาง
+ │   └── CartContext.tsx    # Context ควบคุมตะกร้าสินค้า
+ ├── data/             # ที่เก็บข้อมูลจำลอง
+ │   └── mockData.ts        # ข้อมูลเมนูอาหารและระบบจำลอง Fetch API
+ ├── types/            # ที่เก็บ TypeScript Interfaces
+ │   └── index.ts           # โครงสร้างข้อมูล MenuItem และ CartItem
+ ├── App.tsx           # คอมโพเนนต์หลักและ Layout ของแอป
+ └── main.tsx          # จุดเริ่มต้นของแอปพลิเคชัน (มี CartProvider ครอบ)
