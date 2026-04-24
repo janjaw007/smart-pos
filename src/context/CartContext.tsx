@@ -1,4 +1,6 @@
-import { createContext, useState, useEffect } from "react";
+/* eslint-disable react-refresh/only-export-components */
+
+import { createContext, useState, useEffect, useContext } from "react";
 import type { ReactNode } from "react";
 import type { CartItem, MenuItem } from "../types";
 interface CartContextType {
@@ -9,9 +11,7 @@ interface CartContextType {
   totalPrice: number;
 }
 
-export const CartContext = createContext<CartContextType | undefined>(
-  undefined,
-);
+const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -53,4 +53,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
       {children}
     </CartContext.Provider>
   );
+}
+
+export function useCart() {
+  const context = useContext(CartContext);
+  // ดักจับ Error กรณีลืมใส่ Provider (เป็น Best Practice ของ TypeScript)
+  if (!context) {
+    throw new Error("useCart ต้องถูกใช้งานอยู่ภายใต้ CartProvider เท่านั้น");
+  }
+  return context;
 }

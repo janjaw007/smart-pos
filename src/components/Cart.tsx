@@ -1,11 +1,8 @@
-import { useState, useContext } from "react";
-import { CartContext } from "../context/CartContext";
+import { useState } from "react";
+import { useCart } from "../context/CartContext";
 
 export default function Cart() {
-  const context = useContext(CartContext);
-
-  if (!context) return null;
-  const { cart, totalPrice, removeFromCart, clearCart } = context;
+  const { cart, removeFromCart, clearCart, totalPrice } = useCart();
   const [customerName, setCustomerName] = useState("");
   const [tableNumber, setTableNumber] = useState("");
 

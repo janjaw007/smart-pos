@@ -1,6 +1,6 @@
 import MenuCard from "./components/MenuCard";
 import type { MenuItem } from "./types";
-import { fetchMenuItems, mockMenu } from "./data/mockData";
+import { fetchMenuItems } from "./data/mockData";
 import { useEffect, useState } from "react";
 import CategoryTabs from "./components/CategoryTabs";
 import Cart from "./components/Cart";
